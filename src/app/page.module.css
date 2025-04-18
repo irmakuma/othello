@@ -9,7 +9,25 @@
 }
 
 .board {
+  display: flex;
+  flex-wrap: wrap;
   width: 640px;
   height: 640px;
-  background-color: greenyellow;
+  background-color: green;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border: 5px solid #000;
+}
+
+.stone {
+  width: 55px;
+  height: 55px;
+  background-color: aliceblue;
+  border-radius: 70px;
 }
