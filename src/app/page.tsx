@@ -19,6 +19,7 @@ export default function Home() {
     console.log(x, y);
     const newBoard = structuredClone(board);
     // if (board[y][x] !== turnColor)
+
     if (y >= 0 && x >= 0 && board[y + 1] !== undefined && board[y + 1][x] === 3 - turnColor) {
       newBoard[y][x] = turnColor;
       setTurnColor(3 - turnColor);
@@ -39,42 +40,22 @@ export default function Home() {
       setTurnColor(3 - turnColor);
       setBoard(newBoard);
     }
-    if (
-      y >= 0 &&
-      x >= 0 &&
-      board[y - 1][x - 1] !== undefined &&
-      board[y - 1][x - 1] === 3 - turnColor
-    ) {
+    if (y > 0 && x > 0 && board[y + 1]?.[x - 1] === 3 - turnColor) {
       newBoard[y][x] = turnColor;
       setTurnColor(3 - turnColor);
       setBoard(newBoard);
     }
-    if (
-      y >= 0 &&
-      x >= 0 &&
-      board[y + 1][x + 1] !== undefined &&
-      board[y + 1][x + 1] === 3 - turnColor
-    ) {
+    if (y > 0 && x > 0 && board[y - 1]?.[x + 1] === 3 - turnColor) {
       newBoard[y][x] = turnColor;
       setTurnColor(3 - turnColor);
       setBoard(newBoard);
     }
-    if (
-      y >= 0 &&
-      x >= 0 &&
-      board[y + 1][x - 1] !== undefined &&
-      board[y + 1][x - 1] === 3 - turnColor
-    ) {
+    if (y > 0 && x > 0 && board[y - 1]?.[x - 1] === 3 - turnColor) {
       newBoard[y][x] = turnColor;
       setTurnColor(3 - turnColor);
       setBoard(newBoard);
     }
-    if (
-      y >= 0 &&
-      x >= 0 &&
-      board[y - 1][x + 1] !== undefined &&
-      board[y - 1][x + 1] === 3 - turnColor
-    ) {
+    if (y > 0 && x > 0 && board[y + 1]?.[x + 1] === 3 - turnColor) {
       newBoard[y][x] = turnColor;
       setTurnColor(3 - turnColor);
       setBoard(newBoard);
