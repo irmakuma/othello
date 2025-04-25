@@ -7,10 +7,10 @@ export default function Home() {
   const [turnColor, setTurnColor] = useState(1);
   const [board, setBoard] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0, 2, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 2, 0, 0, 0],
-    [0, 0, 0, 2, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -18,47 +18,47 @@ export default function Home() {
   const clickHandler = (x: number, y: number) => {
     console.log(x, y);
     const newBoard = structuredClone(board);
-    // if (board[y][x] !== turnColor)
+    const enemyColor = 3 - turnColor;
+    let canSpace = false;
+    const height = board.length;
+    const width = board[0].length;
 
-    if (y >= 0 && x >= 0 && board[y + 1] !== undefined && board[y + 1][x] === 3 - turnColor) {
-      newBoard[y][x] = turnColor;
-      setTurnColor(3 - turnColor);
-      setBoard(newBoard);
+    //up_ok
+    if (y > 0 && board[y - 1]?.[x] === enemyColor) {
+      canSpace = true;
     }
-    if (y >= 0 && x >= 0 && board[x + 1] !== undefined && board[y][x + 1] === 3 - turnColor) {
-      newBoard[y][x] = turnColor;
-      setTurnColor(3 - turnColor);
-      setBoard(newBoard);
+    //down_ok
+    if (y < height - 1 && board[y + 1]?.[x] === enemyColor) {
+      canSpace = true;
     }
-    if (y >= 0 && x >= 0 && board[y - 1] !== undefined && board[y - 1][x] === 3 - turnColor) {
-      newBoard[y][x] = turnColor;
-      setTurnColor(3 - turnColor);
-      setBoard(newBoard);
+    //right_ok
+    if (x < width - 1 && board[y]?.[x + 1] === enemyColor) {
+      canSpace = true;
     }
-    if (y >= 0 && x >= 0 && board[x - 1] !== undefined && board[y][x - 1] === 3 - turnColor) {
-      newBoard[y][x] = turnColor;
-      setTurnColor(3 - turnColor);
-      setBoard(newBoard);
+    //left_ok
+    if (x > 0 && board[y]?.[x - 1] === enemyColor) {
+      canSpace = true;
     }
-    if (y > 0 && x > 0 && board[y + 1]?.[x - 1] === 3 - turnColor) {
-      newBoard[y][x] = turnColor;
-      setTurnColor(3 - turnColor);
-      setBoard(newBoard);
+    //left_down_ok
+    if (y < height - 1 && x > 0 && board[y + 1]?.[x - 1] === enemyColor) {
+      canSpace = true;
     }
-    if (y > 0 && x > 0 && board[y - 1]?.[x + 1] === 3 - turnColor) {
-      newBoard[y][x] = turnColor;
-      setTurnColor(3 - turnColor);
-      setBoard(newBoard);
+    //left_up_ok
+    if (y > 0 && x > 0 && board[y - 1]?.[x - 1] === enemyColor) {
+      canSpace = true;
     }
-    if (y > 0 && x > 0 && board[y - 1]?.[x - 1] === 3 - turnColor) {
-      newBoard[y][x] = turnColor;
-      setTurnColor(3 - turnColor);
-      setBoard(newBoard);
+    //right_down_ok
+    if (y < height - 1 && x < width - 1 && board[y + 1]?.[x + 1] === enemyColor) {
+      canSpace = true;
     }
-    if (y > 0 && x > 0 && board[y + 1]?.[x + 1] === 3 - turnColor) {
+    //right_up_ok
+    if (y > 0 && x < width - 1 && board[y - 1]?.[x + 1] === enemyColor) {
+      canSpace = true;
+    }
+    if (canSpace) {
       newBoard[y][x] = turnColor;
-      setTurnColor(3 - turnColor);
       setBoard(newBoard);
+      setTurnColor(enemyColor);
     }
   };
   return (
