@@ -12,7 +12,7 @@ export default function Home() {
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 2, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0], //board[8]
   ]);
   const clickHandler = (x: number, y: number) => {
@@ -28,7 +28,7 @@ export default function Home() {
       canSpace = true;
     }
     //down_ok
-    if (y < height && board[y + 1]?.[x] === enemyColor) {
+    if (y < height - 1 && board[y + 1]?.[x] === enemyColor) {
       canSpace = true;
     }
     //right_ok
