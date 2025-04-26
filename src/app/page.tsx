@@ -6,14 +6,14 @@ import styles from './page.module.css';
 export default function Home() {
   const [turnColor, setTurnColor] = useState(1);
   const [board, setBoard] = useState([
-    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0], //board[0]
     [0, 1, 0, 0, 0, 0, 2, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0, 2, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0], //board[8]
   ]);
   const clickHandler = (x: number, y: number) => {
     console.log(x, y);
@@ -28,7 +28,7 @@ export default function Home() {
       canSpace = true;
     }
     //down_ok
-    if (y < height - 1 && board[y + 1]?.[x] === enemyColor) {
+    if (y < height && board[y + 1]?.[x] === enemyColor) {
       canSpace = true;
     }
     //right_ok
