@@ -7,17 +7,17 @@ export default function Home() {
   const [turnColor, setTurnColor] = useState(1);
   const [board, setBoard] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0], //board[0]
-    [0, 1, 0, 0, 0, 0, 2, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 2, 0, 0, 0],
+    [0, 0, 0, 2, 1, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0], //board[8]
   ]);
   const clickHandler = (x: number, y: number) => {
     console.log(x, y);
-    const newBoard = structuredClone(board);
+    const newBoard = board.map((row) => [...row]);
     const enemyColor = 3 - turnColor;
     let canSpace = false;
     // const height = board.length;
@@ -32,48 +32,36 @@ export default function Home() {
       [1, -1],
       [0, -1],
     ];
-
-    // //up_ok
-    // if (y > 0 && board[y - 1]?.[x] === enemyColor) {
-    //   canSpace = true;
-    // }
-    // //down_ok
-    // if (y < height - 1 && board[y + 1]?.[x] === enemyColor) {
-    //   canSpace = true;
-    // }
-    // //right_ok
-    // if (x < width - 1 && board[y]?.[x + 1] === enemyColor) {
-    //   canSpace = true;
-    // }
-    // //left_ok
-    // if (x > 0 && board[y]?.[x - 1] === enemyColor) {
-    //   canSpace = true;
-    // }
-    // //left_down_ok
-    // if (y < height - 1 && x > 0 && board[y + 1]?.[x - 1] === enemyColor) {
-    //   canSpace = true;
-    // }
-    // //left_up_ok
-    // if (y > 0 && x > 0 && board[y - 1]?.[x - 1] === enemyColor) {
-    //   canSpace = true;
-    // }
-    // //right_down_ok
-    // if (y < height - 1 && x < width - 1 && board[y + 1]?.[x + 1] === enemyColor) {
-    //   canSpace = true;
-    // }
-    // //right_up_ok
-    // if (y > 0 && x < width - 1 && board[y - 1]?.[x + 1] === enemyColor) {
-    //   canSpace = true;
-    // }
     for (const [dy, dx] of dirs) {
-      const ny = y + dy;
-      const nx = x + dx;
-      if (board[ny]?.[nx] === enemyColor) {
-        canSpace = true;
-      }
+      let ny = y + dy;
+      let nx = x + dx;
+      const lineToFlip: [number, number][] = [];
+      while (
+        ny >= 0 &&
+        ny < board.length &&
+        nx >= 0 &&
+        nx < board[0].length &&
+        board[ny][nx] === enemyColor
+      ) {
+        lineToFlip.push([ny, nx]);
+        ny += dy;
+        nx += dx;
 
+        if (
+          ny >= 0 &&
+          ny < board.length &&
+          nx >= 0 &&
+          nx < board[0].length &&
+          board[ny][nx] === turnColor
+        ) {
+          for (const [fy, fx] of lineToFlip) {
+            newBoard[fy][fx] = turnColor;
+          }
+          canSpace = true;
+        }
+      }
       if (canSpace) {
-        while (ny + y < enemyColor) newBoard[y][x] = turnColor;
+        newBoard[y][x] = turnColor;
         setBoard(newBoard);
         setTurnColor(enemyColor);
       }
