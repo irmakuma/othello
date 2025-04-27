@@ -20,45 +20,63 @@ export default function Home() {
     const newBoard = structuredClone(board);
     const enemyColor = 3 - turnColor;
     let canSpace = false;
-    const height = board.length;
-    const width = board[0].length;
+    // const height = board.length;
+    // const width = board[0].length;
+    const dirs = [
+      [-1, -1],
+      [-1, 0],
+      [-1, 1],
+      [0, 1],
+      [1, 1],
+      [1, 0],
+      [1, -1],
+      [0, -1],
+    ];
 
-    //up_ok
-    if (y > 0 && board[y - 1]?.[x] === enemyColor) {
-      canSpace = true;
-    }
-    //down_ok
-    if (y < height - 1 && board[y + 1]?.[x] === enemyColor) {
-      canSpace = true;
-    }
-    //right_ok
-    if (x < width - 1 && board[y]?.[x + 1] === enemyColor) {
-      canSpace = true;
-    }
-    //left_ok
-    if (x > 0 && board[y]?.[x - 1] === enemyColor) {
-      canSpace = true;
-    }
-    //left_down_ok
-    if (y < height - 1 && x > 0 && board[y + 1]?.[x - 1] === enemyColor) {
-      canSpace = true;
-    }
-    //left_up_ok
-    if (y > 0 && x > 0 && board[y - 1]?.[x - 1] === enemyColor) {
-      canSpace = true;
-    }
-    //right_down_ok
-    if (y < height - 1 && x < width - 1 && board[y + 1]?.[x + 1] === enemyColor) {
-      canSpace = true;
-    }
-    //right_up_ok
-    if (y > 0 && x < width - 1 && board[y - 1]?.[x + 1] === enemyColor) {
-      canSpace = true;
-    }
-    if (canSpace) {
-      newBoard[y][x] = turnColor;
-      setBoard(newBoard);
-      setTurnColor(enemyColor);
+    // //up_ok
+    // if (y > 0 && board[y - 1]?.[x] === enemyColor) {
+    //   canSpace = true;
+    // }
+    // //down_ok
+    // if (y < height - 1 && board[y + 1]?.[x] === enemyColor) {
+    //   canSpace = true;
+    // }
+    // //right_ok
+    // if (x < width - 1 && board[y]?.[x + 1] === enemyColor) {
+    //   canSpace = true;
+    // }
+    // //left_ok
+    // if (x > 0 && board[y]?.[x - 1] === enemyColor) {
+    //   canSpace = true;
+    // }
+    // //left_down_ok
+    // if (y < height - 1 && x > 0 && board[y + 1]?.[x - 1] === enemyColor) {
+    //   canSpace = true;
+    // }
+    // //left_up_ok
+    // if (y > 0 && x > 0 && board[y - 1]?.[x - 1] === enemyColor) {
+    //   canSpace = true;
+    // }
+    // //right_down_ok
+    // if (y < height - 1 && x < width - 1 && board[y + 1]?.[x + 1] === enemyColor) {
+    //   canSpace = true;
+    // }
+    // //right_up_ok
+    // if (y > 0 && x < width - 1 && board[y - 1]?.[x + 1] === enemyColor) {
+    //   canSpace = true;
+    // }
+    for (const [dy, dx] of dirs) {
+      const ny = y + dy;
+      const nx = x + dx;
+      if (board[ny]?.[nx] === enemyColor) {
+        canSpace = true;
+      }
+
+      if (canSpace) {
+        while (ny + y < enemyColor) newBoard[y][x] = turnColor;
+        setBoard(newBoard);
+        setTurnColor(enemyColor);
+      }
     }
   };
   return (
