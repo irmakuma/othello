@@ -43,10 +43,10 @@ export default function Home() {
         nx < board[0].length &&
         board[ny][nx] === enemyColor
       ) {
+        // ここからまだ理解できていない
         lineToFlip.push([ny, nx]);
         ny += dy;
         nx += dx;
-
         if (
           ny >= 0 &&
           ny < board.length &&

@@ -26,8 +26,16 @@
 }
 
 .stone {
+  display: flex;
+  place-items: center center;
   width: 55px;
   height: 55px;
   background-color: aliceblue;
   border-radius: 70px;
+}
+
+.canSpaceStone {
+  width: 20px;
+  height: 20px;
+  background-color: gray;
 }
