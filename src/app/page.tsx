@@ -73,13 +73,15 @@ export default function Home() {
         {board.map((row, y) =>
           row.map((color, x) => (
             <div className={styles.cell} key={`${x} - ${y}`} onClick={() => clickHandler(x, y)}>
+              <div
+                className={styles.canSpaceStone}
+                style={{ background: color === 2 ? '#808080' : '#000000000' }}
+              />
               {color !== 0 && (
-                <div className={styles.stone} style={{ background: color === 1 ? '#000' : '#fff' }}>
-                  <div
-                    className={styles.canSpaceStone}
-                    style={{ background: color === 0 ? '#808080' : '#transparent' }}
-                  />
-                </div>
+                <div
+                  className={styles.stone}
+                  style={{ background: color === 1 ? '#000' : '#fff' }}
+                />
               )}
             </div>
           )),
