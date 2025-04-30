@@ -20,8 +20,6 @@ export default function Home() {
     const newBoard = board.map((row) => [...row]);
     const enemyColor = 3 - turnColor;
     let canSpace = false;
-    // const height = board.length;
-    // const width = board[0].length;
     const dirs = [
       [-1, -1],
       [-1, 0],
@@ -43,7 +41,6 @@ export default function Home() {
         nx < board[0].length &&
         board[ny][nx] === enemyColor
       ) {
-        // ここからまだ理解できていない
         lineToFlip.push([ny, nx]);
         ny += dy;
         nx += dx;
@@ -74,12 +71,11 @@ export default function Home() {
           row.map((color, x) => (
             <div className={styles.cell} key={`${x} - ${y}`} onClick={() => clickHandler(x, y)}>
               {color === 0 ? (
-                <div
-                  className={styles.stone}
-                  style={{ background: color === 1 ? '#000' : '#fff' }}
-                />
-              ) : (
                 <div className={styles.canSpaceStone} />
+              ) : (
+                <div className={styles.stone} style={{ background: color === 1 ? '#000' : '#fff' }}>
+                  <div />
+                </div>
               )}
             </div>
           )),
