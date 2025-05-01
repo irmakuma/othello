@@ -9,7 +9,7 @@ export default function Home() {
     [0, 0, 0, 0, 0, 0, 0, 0], //board[0]
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 2, 0, 0, 0],
+    [0, 0, 0, 1, 2, 2, 2, 0],
     [0, 0, 0, 2, 1, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -30,40 +30,42 @@ export default function Home() {
       [1, -1],
       [0, -1],
     ];
-    for (const [dy, dx] of dirs) {
-      let ny = y + dy;
-      let nx = x + dx;
-      const lineToFlip: [number, number][] = [];
-      while (
-        ny >= 0 &&
-        ny < board.length &&
-        nx >= 0 &&
-        nx < board[0].length &&
-        board[ny][nx] === enemyColor
-      ) {
-        lineToFlip.push([ny, nx]);
-        ny += dy;
-        nx += dx;
-        if (
+    if (board[y][x] === 0)
+      for (const [dy, dx] of dirs) {
+        let ny = y + dy;
+        let nx = x + dx;
+        const lineToFlip: [number, number][] = [];
+        while (
           ny >= 0 &&
           ny < board.length &&
           nx >= 0 &&
           nx < board[0].length &&
-          board[ny][nx] === turnColor
+          board[ny][nx] === enemyColor
         ) {
-          for (const [fy, fx] of lineToFlip) {
-            newBoard[fy][fx] = turnColor;
+          lineToFlip.push([ny, nx]);
+          ny += dy;
+          nx += dx;
+          if (
+            ny >= 0 &&
+            ny < board.length &&
+            nx >= 0 &&
+            nx < board[0].length &&
+            board[ny][nx] === turnColor
+          ) {
+            for (const [fy, fx] of lineToFlip) {
+              newBoard[fy][fx] = turnColor;
+            }
+            canSpace = true;
           }
-          canSpace = true;
+        }
+        if (canSpace) {
+          newBoard[y][x] = turnColor;
+          setBoard(newBoard);
+          setTurnColor(enemyColor);
         }
       }
-      if (canSpace) {
-        newBoard[y][x] = turnColor;
-        setBoard(newBoard);
-        setTurnColor(enemyColor);
-      }
-    }
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.board}>
