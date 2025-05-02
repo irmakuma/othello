@@ -4,6 +4,7 @@ import { useState } from 'react';
 import styles from './page.module.css';
 
 export default function Home() {
+  const [canSpaceMap, setCanSpaceMap] = useState<boolean[][]>([]);
   const [turnColor, setTurnColor] = useState(1);
   const [board, setBoard] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0], //board[0]
