@@ -20,7 +20,6 @@ export default function Home() {
   ]);
   const clickHandler = (x: number, y: number) => {
     console.log(x, y);
-    const newBoard = board.map((row) => [...row]);
     const enemyColor = 3 - turnColor;
     let canSpace = false;
     const dirs = [
@@ -37,16 +36,18 @@ export default function Home() {
       const H = board.length, W = board[0].length;
       const map: boolean[][] = Array.from(
         { length: H },
-        () => Array(W).fill(false)
+        ():boolean[] => Array(W).fill(false)
       );
-      if (board[y][x] === 0)
-        for (let y = 0; y < H; y++) {
-          for (let x = 0; x < W; x++) {
-            map[y][x] =
+      for (let yy = 0; yy < H; yy++) {
+        for (let xx = 0; xx < W; xx++) {
+          if (board[yy][xx] !== 0) {
+            map[yy][xx] = false
+            continue
+          }
         for (const [dy, dx] of dirs) {
-          let ny = y + dy;
-          let nx = x + dx;
-          const lineToFlip: [number, number][] = [];
+          let ny = yy + dy;
+          let nx = xx + dx;
+          let foundEnemy = false
           while (
             ny >= 0 &&
             ny < board.length &&
@@ -54,66 +55,56 @@ export default function Home() {
             nx < board[0].length &&
             board[ny][nx] === enemyColor
           ) {
-            lineToFlip.push([ny, nx]);
+            foundEnemy = true
             ny += dy;
             nx += dx;
             if (
+              foundEnemy&&
               ny >= 0 &&
-              ny < board.length &&
+              ny < H &&
               nx >= 0 &&
-              nx < board[0].length &&
+              nx < W &&
               board[ny][nx] === turnColor
             ) {
-              for (const [fy, fx] of lineToFlip) {
-                newBoard[fy][fx] = turnColor;
+              canSpace=true
+              break
               }
-              canSpace = true;
+
           }
+          map[yy][xx]=canSpace
         }
-        setCanSpaceMap(map);
       }
+      setCanSpaceMap(Map)
+    }
 
-            }
-          }
-          if (canSpace) {
-            newBoard[y][x] = turnColor;
-            setBoard(newBoard);
-            setTurnColor(enemyColor);
-            useEffect(() => {
-              updateCanSpaceMap();
-            }, [board, turnColor]);
-          }
-        }
-    };
-
-  return (
-    <div className={styles.container}>
-      <div className={styles.board}>
+return (
+  <div className={styles.container}>
+    <div className={styles.board}>
        {board.map((row, y) =>
-         <div key={y} className={styles.row}>
-           {row.map((color, x) => {
-             const canPlaceHere = color === 0 && canSpaceMap[y]?.[x];
-             return (
-               <div
-                 key={`${y}-${x}`}
-                 className={styles.cell}
-                 onClick={() => clickHandler(x, y)}
-               >
-                 {canPlaceHere && (
-                   <div className={styles.canSpaceStone} />
-                 )}
-                 {color !== 0 && (
-                   <div
-                     className={styles.stone}
-                     style={{ background: color === 1 ? '#000' : '#fff' }}
-                   />
-                 )}
-               </div>
-             );
-           })}
-         </div>
-       )}
-     </div>
-   );
-  </div>
-  )}
+        <div key={y} className={styles.row}>
+          {row.map((color, x) => {
+            const canPlaceHere = color === 0 && canSpaceMap[y]?.[x];
+            return (
+              <div
+                key={`${y}-${x}`}
+                className={styles.cell}
+                onClick={() => clickHandler(x, y)}
+              >
+                {canPlaceHere && (
+                  <div className={styles.canSpaceStone} />
+                )}
+                {color !== 0 && (
+                  <div
+                    className={styles.stone}
+                    style={{ background: color === 1 ? '#000' : '#fff' }}
+                  />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+ </div>
+  )}}
