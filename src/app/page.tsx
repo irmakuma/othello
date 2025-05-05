@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import styles from './page.module.css';
 // この下のuseeffectについての解説を後で見る
-import { useEffect } from 'react'
 
 export default function Home() {
   const [canSpaceMap, setCanSpaceMap] = useState<boolean[][]>([]);
@@ -33,78 +32,76 @@ export default function Home() {
       [0, -1],
     ];
     const updateCanSpaceMap = () => {
-      const H = board.length, W = board[0].length;
-      const map: boolean[][] = Array.from(
-        { length: H },
-        ():boolean[] => Array(W).fill(false)
-      );
+      const H = board.length,
+        W = board[0].length;
+      const map: boolean[][] = Array.from({ length: H }, (): boolean[] => Array(W).fill(false));
       for (let yy = 0; yy < H; yy++) {
         for (let xx = 0; xx < W; xx++) {
           if (board[yy][xx] !== 0) {
-            map[yy][xx] = false
-            continue
+            map[yy][xx] = false;
+            continue;
           }
-        for (const [dy, dx] of dirs) {
-          let ny = yy + dy;
-          let nx = xx + dx;
-          let foundEnemy = false
-          while (
-            ny >= 0 &&
-            ny < board.length &&
-            nx >= 0 &&
-            nx < board[0].length &&
-            board[ny][nx] === enemyColor
-          ) {
-            foundEnemy = true
-            ny += dy;
-            nx += dx;
-            if (
-              foundEnemy&&
+          for (const [dy, dx] of dirs) {
+            let ny = yy + dy;
+            let nx = xx + dx;
+            let foundEnemy = false;
+            while (
               ny >= 0 &&
-              ny < H &&
+              ny < board.length &&
               nx >= 0 &&
-              nx < W &&
-              board[ny][nx] === turnColor
+              nx < board[0].length &&
+              board[ny][nx] === enemyColor
             ) {
-              canSpace=true
-              break
+              foundEnemy = true;
+              ny += dy;
+              nx += dx;
+              if (
+                foundEnemy &&
+                ny >= 0 &&
+                ny < H &&
+                nx >= 0 &&
+                nx < W &&
+                board[ny][nx] === turnColor
+              ) {
+                canSpace = true;
+                break;
               }
-
+            }
+            map[yy][xx] = canSpace;
           }
-          map[yy][xx]=canSpace
         }
+        setCanSpaceMap(map);
       }
-      setCanSpaceMap(Map)
-    }
 
-return (
-  <div className={styles.container}>
-    <div className={styles.board}>
-       {board.map((row, y) =>
-        <div key={y} className={styles.row}>
-          {row.map((color, x) => {
-            const canPlaceHere = color === 0 && canSpaceMap[y]?.[x];
-            return (
-              <div
-                key={`${y}-${x}`}
-                className={styles.cell}
-                onClick={() => clickHandler(x, y)}
-              >
-                {canPlaceHere && (
-                  <div className={styles.canSpaceStone} />
-                )}
-                {color !== 0 && (
-                  <div
-                    className={styles.stone}
-                    style={{ background: color === 1 ? '#000' : '#fff' }}
-                  />
-                )}
+      return (
+        <div className={styles.container}>
+          <div className={styles.board}>
+            {board.map((row, y) => (
+              <div key={y} className={styles.row}>
+                {row.map((color, x) => {
+                  const canPlaceHere = color === 0 && canSpaceMap[y]?.[x];
+                  return (
+                    <div
+                      key={`${y}-${x}`}
+                      className={styles.cell}
+                      onClick={() => clickHandler(x, y)}
+                    >
+                      {canPlaceHere && <div className={styles.canSpaceStone} />}
+                      {color !== 0 && (
+                        <div
+                          className={styles.stone}
+                          style={{ background: color === 1 ? '#000' : '#fff' }}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
               </div>
-            );
-          })}
+            ))}
+          </div>
+          );
         </div>
-      )}
-    </div>
-  );
- </div>
-  )}}
+      );
+    };
+  };
+}
