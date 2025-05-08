@@ -77,7 +77,6 @@ export default function Home() {
             board[ny][nx] === turnColor // その先が自分の石
           ) {
             newMap[yy][xx] = true; // このマス (xx, yy) は置ける場所
-            // このマスが置けることが確定したので、他の方向をチェックする必要はない
             break; // 次の方向へ
           }
         }
