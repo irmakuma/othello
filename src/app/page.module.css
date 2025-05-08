@@ -8,6 +8,12 @@
   padding: 0 0.5rem;
 }
 
+.turnDisplay {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  text-align: center;
+}
+
 .board {
   display: flex;
   flex-wrap: wrap;
