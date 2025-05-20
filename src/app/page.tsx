@@ -65,8 +65,8 @@ export default function Home() {
       }
     }
 
-    const canPlaceAnywhere = newMap.some((row) => {
-      return row.some((canPlace) => canPlace === true);
+    const canPlaceAnywhere = newMap.some((rine) => {
+      return rine.some((canPlace) => canPlace === true);
     });
 
     if (!canPlaceAnywhere) {
