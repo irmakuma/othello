@@ -22,28 +22,33 @@
   background-color: green;
 }
 
-.cell {
+.row {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80px;
-  height: 80px;
-  border: 3px solid #000;
-}
+  width: 100%;
 
-.stone {
-  display: flex;
-  place-items: center;
-  justify-content: center;
-  width: 55px;
-  height: 55px;
-  background-color: aliceblue;
-  border-radius: 70px;
-}
+  .cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border: 3px solid #000;
+  }
 
-.canSpaceStone {
-  width: 15px;
-  height: 15px;
-  background-color: gray;
-  border-radius: 70px;
+  .stone {
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    background-color: aliceblue;
+    border-radius: 70px;
+  }
+
+  .canSpaceStone {
+    width: 15px;
+    height: 15px;
+    background-color: gray;
+    border-radius: 70px;
+  }
 }
