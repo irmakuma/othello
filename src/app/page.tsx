@@ -65,20 +65,14 @@ export default function Home() {
       }
     }
 
+    const canPlaceAnywhere = newMap.some((row) => {
+      return row.some((canPlace) => canPlace === true);
+    });
 
-      const canPlaceAnywhere = newMap.some((row) => {
-        return row.some((canPlace) => canPlace === true);
-      });
-
-      if (!canPlaceAnywhere) {
-        console.log(`${turnColor === 1 ? '黒' : '白'} は置ける場所がないのでパスします。`); // パスしたことをログ出力
-        // ターンを相手に切り替える
-        setTurnColor((3 - turnColor) as 1 | 2);
-        // 注意: パスの場合は setBoard は不要 (盤面は変わらないため)
-        // 注意: この後 setCanSpaceMap(newMap) が呼ばれますが、
-        // 置ける場所がない場合 newMap は全て false なので、canSpaceMap も全て false になります。これは正しい挙動です。
-      }
-    );
+    if (!canPlaceAnywhere) {
+      console.log(`${turnColor === 1 ? '黒' : '白'} は置ける場所がないのでパスします。`);
+      setTurnColor((3 - turnColor) as 1 | 2);
+    }
 
     setCanSpaceMap(newMap);
   }, [board, turnColor, setCanSpaceMap]);
