@@ -70,7 +70,7 @@ export default function Home() {
     });
 
     if (!canPlaceAnywhere) {
-      console.log(`${turnColor === 1 ? '黒' : '白'} は置ける場所がないのでパスします。`);
+      console.log(`${turnColor === 1 ? '黒' : '白'} は置ける場所がないのでパスします`);
       setTurnColor((3 - turnColor) as 1 | 2);
     }
 
