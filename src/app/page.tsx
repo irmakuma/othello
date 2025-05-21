@@ -89,38 +89,26 @@ export default function Home() {
     if (sumStone === 64) {
       let blackStones = 0;
       let whiteStones = 0;
-
-      // 盤面上の黒石と白石の最終数を数える
       for (let y = 0; y < H; y++) {
         for (let x = 0; x < W; x++) {
           if (board[y][x] === 1) {
-            // 黒石 (1)
             blackStones++;
           } else if (board[y][x] === 2) {
-            // 白石 (2)
             whiteStones++;
           }
         }
       }
-
-      // 石の数をコンソールに表示
       console.log(`黒石の数: ${blackStones}`);
       console.log(`白石の数: ${whiteStones}`);
-
-      // 勝敗を判定し、メッセージを生成
       let winnerMessage = '';
       if (blackStones > whiteStones) {
-        winnerMessage = '黒の勝ちです！おめでとうございます！';
+        winnerMessage = '黒の勝ちです';
       } else if (whiteStones > blackStones) {
-        winnerMessage = '白の勝ちです！おめでとうございます！';
+        winnerMessage = '白の勝ちです';
       } else {
-        winnerMessage = '引き分けです！';
+        winnerMessage = '引き分けです';
       }
-
-      // 勝敗メッセージをコンソールに表示
       console.log(winnerMessage);
-
-      // ゲーム終了時の処理なので、ここで updateCanSpaceMap 関数を終了します
       return;
     }
     setCanSpaceMap(newMap);
@@ -186,11 +174,13 @@ export default function Home() {
       console.log('Cannot place stone at', x, y);
     }
   };
+  console.log(board);
   return (
     <div className={styles.container}>
       <div className={styles.turnDisplay}>現在のターン: {turnColor === 1 ? '黒' : '白'}</div>
 
       <div className={styles.board}>
+        <div className={styles.sumStone} />
         {board.map((row, y) => (
           <div key={y} className={styles.row}>
             {row.map((color, x) => {
